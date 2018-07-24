@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package api;
+
+service ServiceHub {
+	rpc Lookup(LockupRequest) returns (LookupResponse) {}
+	rpc Register(RegisterRequest) returns(RegisterResponse){}
+}
+
+message LockupRequest {
+	string name = 1;
+}
+
+message LookupResponse  {
+	repeated string addrs = 1;
+}
+
+message RegisterRequest {
+	string name = 1;
+	repeated string addrs = 2;
+}
+
+message RegisterResponse {
+}
+
+// GatewayAuth the mesh standard authorization service
+service GatewayAuth {
+    rpc Auth(GatewayAuthRequest) returns(GatewayAuthResponse){}
+    rpc Update(GatewayAuthUpdateReuest) returns (GatewayAuthUpdateResponse){}
+}
+
+message GatewayAuthRequest {
+    string role = 1;
+    string service = 2;
+    string methd = 3;
+}
+
+message GatewayAuthResponse {
+    GatewayAuthStatus status = 1;
+}
+
+enum GatewayAuthStatus {
+    ACCEPT = 0;
+    REJECT = 1;
+}
+
+
+message GatewayAuthUpdateReuest {
+    repeated string roles = 1;
+    string service = 2;
+    string methd = 3;
+    GatewayAuthStatus status = 4;
+}
+
+message GatewayAuthUpdateResponse {
+
+}
+
+service PasswordLoginService {
+    rpc Login(LoginWithPassowrdRequest) returns (LoginResponse) {}
+    rpc L
+}
+
+enum LoginStatus {
+    SUCCESS = 0;
+    REJECT  = 1;
+    BLOCK = 3;
+}
+
+message PassowrdLoginRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message LoginResponse {
+    LoginStatus status = 1;
+}
